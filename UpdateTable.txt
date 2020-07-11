@@ -1,0 +1,5 @@
+UPDATE apple_retail_store
+
+SET statefp = '06'
+
+WHERE state = 'CA'

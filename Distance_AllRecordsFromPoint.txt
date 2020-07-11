@@ -1,0 +1,19 @@
+with query as 
+
+(
+SELECT 
+cartodb_id,
+the_geom,
+countyfp as county_name, 
+statefp as state_name,
+
+ST_Distance(the_geom::geography, CDB_LatLng(41.1,-73.79)::geography)/1609.34 as dist_mi
+
+FROM cb_2013_us_county_500k
+
+WHERE '06' = statefp
+)
+
+SELECT *,
+ST_Transform(the_geom, 3857) as the_geom_webmercator
+FROM query 

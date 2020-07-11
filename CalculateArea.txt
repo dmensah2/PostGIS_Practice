@@ -1,0 +1,30 @@
+with query as (
+  
+SELECT 
+a.the_geom,
+a.cartodb_id,
+a.countyfp,
+a.statefp,
+st_distance(st_centroid(a.the_geom)::geography, CDB_latlng(43.7, -71.1)::geography)/1609 as dist_mi,
+st_area(st_transform(a.the_geom, 2229))/27878400 as sq_mi,
+st_area(st_transform(a.the_geom, 3857))/1000000 as sq_m,        
+count (*) as total_stores
+  
+FROM cb_2013_us_county_500k_copy a
+
+JOIN apple_retail_store b
+
+ON st_contains(a.the_geom, b.the_geom)
+  
+WHERE a.statefp = '06'
+  
+GROUP BY (a.the_geom, a.cartodb_id) 
+
+ORDER BY total_stores DESC  
+)
+
+select *,
+
+st_transform(the_geom, 3857) as the_geom_webmercator
+
+FROM query

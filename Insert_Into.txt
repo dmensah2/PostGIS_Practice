@@ -1,0 +1,4 @@
+INSERT INTO table
+(column)
+
+VALUES (info)

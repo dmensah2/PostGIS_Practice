@@ -1,0 +1,26 @@
+with query as 
+(
+SELECT cb_2013_us_county_500k_copy.the_geom,
+	   cb_2013_us_county_500k_copy.cartodb_id,
+	   cb_2013_us_county_500k_copy.statefp,
+	   cb_2013_us_county_500k_copy.countyfp,
+       cb_2013_us_county_500k_copy.geoid,
+       COUNT (*) as total_facilities
+       
+
+FROM cb_2013_us_county_500k_copy, bcc_activelicenses_clean
+
+WHERE ST_Intersects(cb_2013_us_county_500k_copy.the_geom, bcc_activelicenses_clean.the_geom)
+
+GROUP BY cb_2013_us_county_500k_copy.cartodb_id, cb_2013_us_county_500k_copy.the_geom
+
+ORDER BY geoid ASC
+  
+  )
+  
+SELECT *,
+
+st_transform(the_geom, 3857) as the_geom_webmercator
+
+FROM query
+

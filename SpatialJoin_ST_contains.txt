@@ -1,0 +1,29 @@
+with query as (
+  
+SELECT 
+a.the_geom,
+a.cartodb_id,
+a.countyfp,
+a.statefp,
+count (*) as total_stores
+  
+FROM cb_2013_us_county_500k_copy a
+
+JOIN apple_retail_store b
+
+ON st_contains(a.the_geom, b.the_geom)
+  
+WHERE a.statefp = '06'
+  
+GROUP BY (a.the_geom, a.cartodb_id) 
+
+ORDER BY total_stores DESC
+ 
+   
+)
+
+select *,
+
+st_transform(the_geom, 3857) as the_geom_webmercator
+
+FROM query

@@ -1,0 +1,12 @@
+#THIS IS GOOD FOR AFTER YOU HAVE COMPLETED A JOIN AND CREATED A NEW DATASET FROM IT 
+
+UPDATE counties_ny_copy
+
+/*column from current table*/
+SET housing_un = cb_2013_us_county_500k.geoid /*column from origin table*/
+
+/*where you're getting your data from*/
+FROM cb_2013_us_county_500k
+
+/*writes out populations only where the county ids match*/
+WHERE counties_ny_copy.county_fip = cb_2013_us_county_500k.countyfp

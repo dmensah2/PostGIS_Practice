@@ -1,0 +1,24 @@
+with query as 
+(
+SELECT 
+a.cartodb_id,
+a.the_geom,
+a.store_name,
+a.county,
+a.state,
+
+ST_Distance(the_geom::geography, CDB_latlng(43.7, -71.1)::geography) as dist_m,
+
+ST_Distance(the_geom::geography, CDB_latlng(43.7, -71.1)::geography)/1609 as dist_mi
+
+FROM
+apple_retail_store a
+
+WHERE state = 'CA'
+)
+
+SELECT *,
+
+st_transform(the_geom, 3857) as the_geom_webmercator
+
+FROM query

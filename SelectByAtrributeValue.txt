@@ -1,0 +1,8 @@
+SELECT
+cb_2013_us_county_500k.the_geom,
+cb_2013_us_county_500k.countyfp,
+counties_ny_copy.state_name
+
+FROM cb_2013_us_county_500k, counties_ny_copy
+
+WHERE cb_2013_us_county_500k.countyfp = counties_ny_copy.county_fip

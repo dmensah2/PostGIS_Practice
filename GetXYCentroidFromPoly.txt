@@ -1,0 +1,25 @@
+with query as (
+  
+SELECT 
+a.the_geom,
+a.cartodb_id,
+a.countyfp,
+a.statefp,
+st_y(st_centroid(b.the_geom)) as longitude,
+st_x(st_centroid(b.the_geom)) as latitude
+
+FROM cb_2013_us_county_500k_copy a
+
+JOIN apple_retail_store b
+
+ON st_intersects(a.the_geom, b.the_geom)
+  
+WHERE a.statefp = '06'
+  
+)
+
+select *,
+
+st_transform(the_geom, 3857) as the_geom_webmercator
+
+FROM query

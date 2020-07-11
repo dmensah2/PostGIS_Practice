@@ -1,0 +1,24 @@
+with query as (
+SELECT 
+	a.cartodb_id, 
+	a.the_geom,
+    count(*) as active_licenses,
+    a.countyfp as county_name,
+    a.statefp as state_name
+    
+FROM cb_2013_us_county_500k a
+
+JOIN bcc_activelicenses_clean b
+
+ON ST_Contains(a.the_geom, b.the_geom)
+  
+WHERE '06' = statefp
+
+GROUP BY 1,2,4)
+
+/*change coordinate system*/
+
+SELECT
+*, st_transform(the_geom, 3857) as the_geom_webmercator
+
+FROM query

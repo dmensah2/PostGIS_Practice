@@ -1,0 +1,27 @@
+#when you aggregate points, those points are from the second table youre referencing
+#first select the columns from the poly layer you want to look at - MAKE SURE TO INCLUDE CARTOID AND GEOM AND THE ONE YOU'RE AGGREGATING BY 
+with query as(
+SELECT cb_2013_us_county_500k_copy.the_geom,
+       cb_2013_us_county_500k_copy.cartodb_id,
+       cb_2013_us_county_500k_copy.statefp,
+       cb_2013_us_county_500k_copy.countyfp,
+       cb_2013_us_county_500k_copy.geoid,
+       /*Counts the total columns you group by - YOU NEED TO GROUP/AGGREGATE LATER FOR THIS TO WORK!!)
+       COUNT (*) as total_facilities
+
+#the tables you are looking to analyze
+FROM cb_2013_us_county_500k_copy, bcc_activelicenses_clean
+
+#insersecting the geometries so you need the geom for each table
+WHERE ST_Intersects(cb_2013_us_county_500k_copy.the_geom, bcc_activelicenses_clean.the_geom)
+
+#now that you've intersected, you need to group it by the geom of the table you're looking at, but please include the cartodb_id since apparently it's super important idkidkidk
+GROUP BY cb_2013_us_county_500k_copy.cartodb_id, cb_2013_us_county_500k_copy.the_geom
+) 
+
+#select from you query to project to web mercator projection
+SELECT *,
+
+st_transform(the_geom, 3857) as the_geom_webmercator
+
+FROM query
