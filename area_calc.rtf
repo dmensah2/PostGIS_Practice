@@ -1,0 +1,41 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2578
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 with mercator as (\
+with query as (\
+  \
+SELECT \
+a.the_geom,\
+a.cartodb_id,\
+a.geoid,\
+a.geoid_text,\
+b.estimate as totpop,\
+b.name,\
+b.percentoftotal\
+  \
+FROM "weedmaps-admin".tl_2018_35_bg a\
+\
+JOIN "weedmaps-admin".nm_bg_pop_2018 b\
+\
+ON a.geoid = b.geoid\
+)\
+  \
+SELECT *,\
+\
+st_transform(the_geom, 3857) as the_geom_webmercator\
+\
+FROM query\
+ )\
+\
+SELECT *,\
+st_area(the_geom_webmercator) as area_sqm, \
+st_area(the_geom_webmercator) * 10.7639 as area_sqft,\
+st_area(the_geom_webmercator)/1000000 as area_sqkm,\
+st_area(the_geom_webmercator) * 0.00000038610 as sqmi,\
+totpop/(st_area(the_geom_webmercator) * 0.00000038610) as pop_sqmi\
+\
+FROM mercator}

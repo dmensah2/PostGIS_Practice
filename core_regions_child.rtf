@@ -1,0 +1,93 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red22\green21\blue22;\red22\green21\blue22;}
+{\*\expandedcolortbl;;\cssrgb\c11373\c10980\c11373;\cssrgb\c11373\c10980\c11373\c3922;}
+\margl1440\margr1440\vieww37900\viewh21300\viewkind0
+\deftab720
+\pard\pardeftab720\sl360\partightenfactor0
+
+\f0\fs24 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 SELECT\
+a.cartodb_id,\
+a.the_geom_webmercator,\
+a.name,\
+a.the_geom_webmercator as the_geom,\
+a.id as region_id,\
+a.slug,\
+a.published_for_dispensaries,\
+a.published_for_brands\
+\
+FROM "weedmaps-admin".core_regions a, "weedmaps-admin".core_regions b\
+\
+WHERE a.name not in (\
+  'Earth',\
+    'United States',\
+    'Alberta',\
+    'Yukon Territory',\
+  	'Northwest Territories',\
+    'British Columbia',\
+    'Manitoba',\
+    'Ontario',\
+    'Quebec',\
+    'Nova Scotia'\
+    'Saskatchewan',\
+    'Nunavut',\
+    'Newfoundland and Labrador',\
+  	'Mexico',\
+    'Canada',\
+    'Argentina',\
+    'Uruguay',\
+  	'Alabama'\
+	'Alaska',\
+    'Arizona',\
+    'Arkansas',\
+    'California',\
+    'Colorado',\
+    'Connecticut',\
+    'Delaware',\
+    'Florida',\
+    'Georgia',\
+    'Hawaii',\
+    'Idaho',\
+  	'Indiana',\
+    'Illinois',\
+    'Iowa',\
+    'Kansas',\
+    'Kentucky',\
+    'Louisiana',\
+    'Maine',\
+    'Maryland',\
+    'Massachusetts',\
+    'Michigan',\
+    'Minnesota',\
+    'Mississippi',\
+    'Missouri',\
+    'Montana',\
+    'Nebraska',\
+    'Nevada',\
+    'New Hampshire',\
+    'New Jersey',\
+    'New Mexico',\
+    'New York',\
+    'North Carolina',\
+    'North Dakota',\
+    'Ohio',\
+    'Oklahoma',\
+    'Oregon',\
+    'Pennsylvania',\
+    'Rhode Island',\
+    'South Carolina',\
+    'South Dakota',\
+    'Tennessee',\
+    'Texas',\
+    'Utah',\
+    'Vermont',\
+    'Virginia',\
+    'Washington',\
+    'West Virginia',\
+    'Wisconsin',\
+    'Wyoming'\
+)\
+\
+and a.published_for_dispensaries = true\
+}
